@@ -31,17 +31,6 @@ set(ARCH_PATH ${KPATH}/arch/${ARCH_NAME}/common)
 cmake_path(GET CMAKE_CURRENT_LIST_DIR PARENT_PATH BOARD_PATH)
 set(BOARD_CONFIG_PATH ${BOARD_PATH}/config)
 
-# Optimization flags:
-# -O0 do no optimization, the default if no optimization level is specified
-# -O or -O1 optimize minimally
-# -O2 optimize more
-# -O3 optimize even more
-# -Ofast optimize very aggressively to the point of breaking the standard
-# -Og Optimize debugging experience, enables optimizations that do not
-# interfere with debugging
-# -Os Optimize for size with -O2 optimizations that do not increase code size
-set(OPT_OPTIMIZATION -O2)
-
 # Boot file
 set(BOOT_FILE ${BOARD_PATH}/core/stage_1_boot.cpp)
 
@@ -79,7 +68,7 @@ set(CLOCK_FREQ -DHSE_VALUE=8000000 -DSYSCLK_FREQ_168MHz=168000000)
 # This is the program that is invoked when the program-<target_name> target is
 # built. Use <binary> or <hex> as placeolders, they will be replaced by the
 # build systems with the binary or hex file path repectively.
-# If a command is not specified, the build system will fallback st-flash
+# If a command is not specified, the build system will fallback to st-flash
 # set(PROGRAM_CMDLINE st-flash --reset write <binary> 0x8000000)
 
 # Basic flags
@@ -90,12 +79,13 @@ set(AFLAGS ${FLAGS_BASE})
 set(LFLAGS ${FLAGS_BASE} -Wl,--gc-sections,-Map,main.map -Wl,-T${LINKER_SCRIPT} ${OPT_EXCEPT} ${OPT_OPTIMIZATION} -nostdlib)
 
 # Flags for C/C++
-string(TOUPPER ${BOARD_NAME} BOARD_UPPER)
+string(TOUPPER ${BOARD_NAME} BOARD_NAME_UPPER)
+string(TOUPPER ${ARCH_NAME} ARCH_NAME_UPPER)
 set(CFLAGS
-    -D_BOARD_${BOARD_UPPER} -D_MIOSIX_BOARDNAME=\"${BOARD_NAME}\"
-    -D_DEFAULT_SOURCE=1 -ffunction-sections -Wall -Werror=return-type -g
-    -D_ARCH_CORTEXM4_STM32F4
-    ${CLOCK_FREQ} ${XRAM} ${SRAM_BOOT} ${FLAGS_BASE} ${OPT_OPTIMIZATION} -c
+    -D_BOARD_${BOARD_NAME_UPPER} -D_MIOSIX_BOARDNAME="${BOARD_NAME}"
+    -D_DEFAULT_SOURCE=1 -ffunction-sections -Wall -Werror=return-type
+    -D_ARCH_${ARCH_NAME_UPPER}
+    ${CLOCK_FREQ} ${XRAM} ${SRAM_BOOT} ${FLAGS_BASE} -c
 )
 set(CXXFLAGS ${CFLAGS} -std=c++14 ${OPT_EXCEPT})
 

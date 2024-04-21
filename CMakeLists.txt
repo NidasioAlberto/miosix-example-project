@@ -14,5 +14,5 @@ set(KPATH ${CMAKE_CURRENT_LIST_DIR}/miosix-kernel/miosix)
 miosix_add_board_libraries(stm32f429zi_nokia/config/board_options.cmake)
 
 add_executable(example src/main.cpp)
-target_link_libraries(example PUBLIC MxGui::mxgui-stm32f429zi_stm32f4discovery)
-miosix_link_target(example stm32f429zi_stm32f4discovery)
+target_link_libraries(example PUBLIC MxGui::mxgui-stm32f429zi_discovery)
+miosix_link_target(example stm32f429zi_nokia)
