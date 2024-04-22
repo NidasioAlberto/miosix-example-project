@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Miosix GCC 9.2.0",
+        "toolchainFile": "miosix-kernel/miosix/cmake/toolchain.cmake"
+    },
+    {
+        "name": "Miosix Clang",
+        "toolchainFile": "miosix-kernel/miosix/cmake/toolchain_clang.cmake"
+    }
+]

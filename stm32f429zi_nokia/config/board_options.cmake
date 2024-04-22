@@ -31,6 +31,9 @@ set(ARCH_PATH ${KPATH}/arch/${ARCH_NAME}/common)
 cmake_path(GET CMAKE_CURRENT_LIST_DIR PARENT_PATH BOARD_PATH)
 set(BOARD_CONFIG_PATH ${BOARD_PATH}/config)
 
+# Architecture include path for linker
+set(ARCH_LINKER_PATH thumb/cm4/hardfp/fpv4sp)
+
 # Boot file
 set(BOOT_FILE ${BOARD_PATH}/core/stage_1_boot.cpp)
 
